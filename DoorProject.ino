@@ -7,14 +7,17 @@ the L293D chip, Unlock door with a timer using two limit switches
 
 Author: Tom Sadan, 2023
 ************************/
+#include "pitches.h"
+
+#define BUZZER 11
 
 #define ENABLE 5
 #define DIRA 3
 #define DIRB 4
 
 #define LEDPIN 6
-#define BUTTONFORWARD 8
-#define BUTTONBACKWARD 9
+#define FRONTLIMITSWITCH 8
+#define BACKLIMITSWITCH 9
 #define ACTIVATIONBUTTON 10
 
 #define OFF 0
@@ -37,8 +40,8 @@ void setup() {
   pinMode(DIRB,OUTPUT);
 
   pinMode(LEDPIN, OUTPUT);
-  pinMode(BUTTONFORWARD, INPUT_PULLUP);  
-  pinMode(BUTTONBACKWARD, INPUT_PULLUP);  
+  pinMode(FRONTLIMITSWITCH, INPUT_PULLUP);  
+  pinMode(BACKLIMITSWITCH, INPUT_PULLUP);  
   pinMode(ACTIVATIONBUTTON, INPUT_PULLUP);  
 
   Serial.begin(9600);
@@ -104,15 +107,52 @@ int debounceRead(int input) {
   return digitalPinsCurrentState[input];
 }
 
+//////// MUSIC ////////
+
+void MickieSong() {
+  tone(BUZZER, NOTE_D5, 200);
+  delay(50);
+  tone(BUZZER, NOTE_D5, 200);
+  delay(50);
+  tone(BUZZER, NOTE_D5, 200);
+  delay(300);
+  tone(BUZZER, NOTE_D5, 200);
+  delay(50);
+  tone(BUZZER, NOTE_D5, 200);
+  delay(50);
+  tone(BUZZER, NOTE_D5, 200);
+  delay(300);
+  tone(BUZZER, NOTE_D5, 200);
+  delay(50);
+  tone(BUZZER, NOTE_D5, 200);
+  delay(50);
+  tone(BUZZER, NOTE_D5, 200);
+  delay(300);
+  tone(BUZZER, NOTE_C5, 200);
+  delay(50);
+  tone(BUZZER, NOTE_C5, 200);
+  delay(50);
+  tone(BUZZER, NOTE_C5, 200);
+}
+
+void OpeningSound() {
+  tone(BUZZER, NOTE_G5, 250);
+  tone(BUZZER, NOTE_C5, 500);
+}
+
+//////// MAIN CODE ////////
+
 void loop() {  
-  if (digitalRead(BUTTONBACKWARD) == LOW && state == BACKWARD)
+  if (digitalRead(BACKLIMITSWITCH) == LOW && state == BACKWARD)
   {
     stateOff();
+    MickieSong();
   }
-  if (digitalRead(BUTTONFORWARD) == LOW && state == FORWARD) {
+  if (digitalRead(FRONTLIMITSWITCH) == LOW && state == FORWARD) {
     stateBackward();
   }
   if (debounceRead(ACTIVATIONBUTTON) == LOW && state == OFF) {
+    OpeningSound();
     stateForward();
   }
 }
