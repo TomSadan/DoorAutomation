@@ -24,12 +24,6 @@ Author: Tom Sadan, 2023
 #define TIME_DOOR_UNLOCKED_MS 5000
 
 int state = OFF;
-
-
-int digitalPinsCurrentState[] = {HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH};
-int digitalPinsLastState[] = {HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH};
-unsigned long lastDebounceTime[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-unsigned long debounceDelay = 50;
  
 void setup() {
   pinMode(ENABLE,OUTPUT);
@@ -89,30 +83,17 @@ void stateBackward(){
     backward();
     digitalWrite(LEDPIN, HIGH);
 }
-//////// DEBOUNCING ////////
-int debounceRead(int input) {
-  int reading = digitalRead(input);
-  //Serial.println(reading);
-  if (reading != digitalPinsLastState[input]) {
-    lastDebounceTime[input] = millis();
-  }
 
-  if ((millis() - lastDebounceTime[input]) > debounceDelay) {
-    digitalPinsCurrentState[input] = reading;
-  }
-  digitalPinsLastState[input] = reading;
-  return digitalPinsCurrentState[input];
-}
 
 void loop() {  
-  if (debounceRead(BUTTONBACKWARD) == LOW && state == BACKWARD)
+  if (digitalRead(BUTTONBACKWARD) == LOW && state == BACKWARD)
   {
     stateOff();
   }
-  if (debounceRead(BUTTONFORWARD) == LOW && state == FORWARD) {
+  if (digitalRead(BUTTONFORWARD) == LOW && state == FORWARD) {
     stateBackward();
   }
-  if (debounceRead(ACTIVATIONBUTTON) == LOW && state == OFF) {
+  if (digitalRead(ACTIVATIONBUTTON) == LOW && state == OFF) {
     stateForward();
   }
 }
