@@ -111,33 +111,34 @@ int debounceRead(int input) {
 
 void MickieSong() {
   tone(BUZZER, NOTE_D5, 200);
-  delay(50);
+  delay(200);
   tone(BUZZER, NOTE_D5, 200);
-  delay(50);
+  delay(200);
   tone(BUZZER, NOTE_D5, 200);
-  delay(300);
+  delay(500);
   tone(BUZZER, NOTE_D5, 200);
-  delay(50);
+  delay(200);
   tone(BUZZER, NOTE_D5, 200);
-  delay(50);
+  delay(200);
   tone(BUZZER, NOTE_D5, 200);
-  delay(300);
+  delay(500);
   tone(BUZZER, NOTE_D5, 200);
-  delay(50);
+  delay(200);
   tone(BUZZER, NOTE_D5, 200);
-  delay(50);
+  delay(200);
   tone(BUZZER, NOTE_D5, 200);
-  delay(300);
+  delay(500);
   tone(BUZZER, NOTE_C5, 200);
-  delay(50);
+  delay(200);
   tone(BUZZER, NOTE_C5, 200);
-  delay(50);
+  delay(200);
   tone(BUZZER, NOTE_C5, 200);
 }
 
 void OpeningSound() {
-  tone(BUZZER, NOTE_G5, 250);
-  tone(BUZZER, NOTE_C5, 500);
+  tone(BUZZER, NOTE_G5, 300);
+  delay(250);
+  tone(BUZZER, NOTE_C5, 700);
 }
 
 //////// MAIN CODE ////////
